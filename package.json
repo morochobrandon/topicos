@@ -1,0 +1,25 @@
+{
+  "name": "topicos",
+  "version": "1.0.0",
+  "description": "hola mundo",
+  "main": "index.js",
+  "type": "module",
+  "homepage": "https://github.com/morochobrandon/topicos#readme",
+  "bugs": {
+    "url": "https://github.com/morochobrandon/topicos/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morochobrandon/topicos.git"
+  },
+  "license": "ISC",
+  "author": "Brandon",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
