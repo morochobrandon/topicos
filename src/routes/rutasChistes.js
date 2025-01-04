@@ -24,11 +24,11 @@ router.get("/", async (req, res) => {
       const data = await response.json();
       return res.status(200).send(data);
     } else if (tipo === "Propio") {
-      const chiste = await Chiste.findOne();
+      const count = await Chiste.countDocuments();
+      const random = Math.floor(Math.random() * count);
+      const chiste = await Chiste.findOne().skip(random);
       if (!chiste) {
-        return res
-          .status(200)
-          .send({ message: "Aun no hay chistes, cree uno!" });
+        return res.status(200).send({ message: "Aun no hay chistes, cree uno!" });
       }
       return res.status(200).send(chiste);
     } else {
@@ -39,10 +39,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//POST: Para guardar un chiste en la base de datos:
-
 const categoriasPermitidas = ['Dad joke', 'Humor Negro', 'Chistoso', 'Malo'];
-
 router.post('/', async (req, res) => {
     try {
         const { texto, autor = 'Se perdió en el Ávila como Led', puntaje, categoria } = req.body;
@@ -65,6 +62,4 @@ router.post('/', async (req, res) => {
         return res.status(500).send({ error: 'Error al guardar el chiste' });
     }
 });
-
-
 export default router;
