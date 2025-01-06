@@ -36,3 +36,36 @@ export const getChiste = async (req, res) => {
     return res.status(500).send({ error: "Error al obtener el chiste" });
   }
 };
+
+const categoriasPermitidas = ["Dad joke", "Humor Negro", "Chistoso", "Malo"];
+
+
+export const postChiste = async (req, res) => {
+  try {
+    const {
+      texto,
+      autor = "Se perdió en el Ávila como Led",
+      puntaje,
+      categoria,
+    } = req.body;
+
+    if (!texto || !puntaje || !categoria) {
+      return res
+        .status(400)
+        .send({ error: "Texto, puntaje y categoría son requeridos" });
+    }
+    if (!categoriasPermitidas.includes(categoria)) {
+      return res.status(400).send({
+        error:
+          "Categoría no válida. Las categorías permitidas son: Dad joke, Humor Negro, Chistoso, Malo",
+      });
+    }
+
+    const nuevoChiste = new Chiste({ texto, autor, puntaje, categoria });
+    await nuevoChiste.save();
+
+    return res.status(201).send({ id: nuevoChiste._id });
+  } catch (err) {
+    return res.status(500).send({ error: "Error al guardar el chiste" });
+  }
+};
