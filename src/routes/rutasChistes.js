@@ -98,7 +98,79 @@ const router = express.Router();
  */
 router.get("/", getChiste);
 
-
+/**
+ * @swagger
+ * /api/v1/chiste:
+ *   post:
+ *     summary: Crea un nuevo chiste
+ *     tags: [Chistes]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               texto:
+ *                 type: string
+ *                 description: El texto del chiste
+ *                 example: "Este es un chiste muy gracioso"
+ *               autor:
+ *                 type: string
+ *                 description: El autor del chiste
+ *                 example: "Juan Pérez"
+ *               puntaje:
+ *                 type: number
+ *                 description: El puntaje del chiste
+ *                 example: 5
+ *               categoria:
+ *                 type: string
+ *                 description: La categoría del chiste
+ *                 example: "Humor"
+ *     responses:
+ *       201:
+ *         description: Chiste creado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID del chiste creado
+ *                 texto:
+ *                   type: string
+ *                   description: El texto del chiste
+ *                 autor:
+ *                   type: string
+ *                   description: El autor del chiste
+ *                 puntaje:
+ *                   type: number
+ *                   description: El puntaje del chiste
+ *                 categoria:
+ *                   type: string
+ *                   description: La categoría del chiste
+ *       400:
+ *         description: Error en la solicitud
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ *       500:
+ *         description: Error al crear el chiste
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ */
 router.post("/", postChiste);
 
 export default router;
