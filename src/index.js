@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { User } from "./models/user.js";
 import {routes} from "./routes/index.js"
+import swaggerUI from "swagger-ui-express";
+import specs from "./swagger/swagger.js";
 const app = express();
 
 dotenv.config();
@@ -13,6 +15,7 @@ const PORT = 3005;
 app.use(cors({ origin: "*" }));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false }));
+app.use("/api-docs",swaggerUI.serve,swaggerUI.setup(specs))
 
 const connectDB = () => {
   const {
