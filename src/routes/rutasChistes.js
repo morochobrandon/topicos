@@ -3,7 +3,7 @@ import express from "express";
 import {
   getChiste,
   postChiste,
-  putChiste,
+  putChiste
 } from "../controllers/rutasChistesController.js";
 
 
@@ -100,11 +100,6 @@ const router = express.Router();
  */
 router.get("/", getChiste);
 
-//documentacion
-router.put("/:id", putChiste);
-
-
-
 /**
  * @swagger
  * /api/v1/chiste:
@@ -180,4 +175,98 @@ router.put("/:id", putChiste);
  */
 router.post("/", postChiste);
 
+/**
+ * @swagger
+ * /api/v1/chiste/{id}:
+ *   put:
+ *     summary: Actualiza cualquiera de los campos de un chiste existente
+ *     tags: [Chistes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID del chiste a actualizar
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               texto:
+ *                 type: string
+ *                 description: El texto actualizado del chiste
+ *                 example: "Este es un chiste actualizado"
+ *               autor:
+ *                 type: string
+ *                 description: El autor actualizado del chiste
+ *                 example: "María Gómez"
+ *               puntaje:
+ *                 type: number
+ *                 description: El puntaje actualizado del chiste
+ *                 example: 4
+ *               categoria:
+ *                 type: string
+ *                 description: La categoría actualizada del chiste
+ *                 example: "Dad joke"
+ *     responses:
+ *       200:
+ *         description: Chiste actualizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID del chiste actualizado
+ *                 texto:
+ *                   type: string
+ *                   description: El texto actualizado del chiste
+ *                 autor:
+ *                   type: string
+ *                   description: El autor actualizado del chiste
+ *                 puntaje:
+ *                   type: number
+ *                   description: El puntaje actualizado del chiste
+ *                 categoria:
+ *                   type: string
+ *                   description: La categoría actualizada del chiste
+ *       400:
+ *         description: Error en la solicitud (ID no válido o campos faltantes)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ *       404:
+ *         description: Chiste no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ *       500:
+ *         description: Error al actualizar el chiste
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ */
+router.put("/:id", putChiste);
+
+
 export default router;
+

@@ -1,6 +1,9 @@
 //import fetch from "node-fetch";
 import { Chiste } from "./../models/chistes.js";
 
+//Brandon:
+// Endpoint 1: Obtener un chiste Chuck, Dad o Propio
+
 export const getChiste = async (req, res) => {
   const { tipo } = req.query;
 
@@ -37,8 +40,8 @@ export const getChiste = async (req, res) => {
   }
 };
 
+// Endpoint 2: Crear un nuevo chiste
 const categoriasPermitidas = ["Dad joke", "Humor Negro", "Chistoso", "Malo"];
-
 
 export const postChiste = async (req, res) => {
   try {
@@ -67,5 +70,38 @@ export const postChiste = async (req, res) => {
     return res.status(201).send({ id: nuevoChiste._id });
   } catch (err) {
     return res.status(500).send({ error: "Error al guardar el chiste" });
+  }
+};
+
+//Mario: 
+// Endpoint 3: Actualizar cualquier campo de un chiste
+
+export const putChiste = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { texto, autor, puntaje, categoria } = req.body;
+    const chiste = await Chiste.findById(id);   
+    if (!chiste) {
+      return res.status(404).json({ message: 'Chiste no encontrado' });
+    }
+    if (texto) {
+      chiste.texto = texto;
+    }
+    if (autor) {
+      chiste.autor = autor;
+    }
+    if (puntaje) {
+      chiste.puntaje = puntaje;
+    }
+    if (categoria) {
+      if (!categoriasPermitidas.includes(categoria)) { 
+        return res.status(400).send({ error: 'Categoría no válida. Las categorías permitidas son: Dad joke, Humor Negro, Chistoso, Malo' });
+      }
+      chiste.categoria = categoria;
+    }
+    await chiste.save();
+    return res.status(200).json(chiste);
+  } catch (err) {
+    return res.status(500).send({ error: 'Error al actualizar el chiste' });
   }
 };
