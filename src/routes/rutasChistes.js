@@ -1,132 +1,183 @@
 import express from "express";
-import {Chiste} from "./../models/chistes.js";
+//import {Chiste} from "./../models/chistes.js";
+import {
+  getChiste,
+  postChiste,
+  putChiste,
+} from "../controllers/rutasChistesController.js";
 
 
 const router = express.Router();
 
-//get para obtener un chiste
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Chiste:
+ *       type: object
+ *       required:
+ *         - texto
+ *         - puntaje
+ *         - categoria
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the chistes
+ *         texto:
+ *           type: string
+ *           description: The text of the chiste
+ *         autor:
+ *           type: string
+ *           description: The author of the chiste
+ *         puntaje:
+ *           type: number
+ *           description: The score of the chiste
+ *         categoria:
+ *           type: string
+ *           description: The category of the chiste
+ *       example:
+ *         id: "677bea5b841043b29e98b54b"
+ *         texto: "no es chiste , pero si quieres si es chiste"
+ *         autor: "Brandon"
+ *         puntaje: 5
+ *         categoria: "Humor"
+ */
 
-router.get("/", async (req, res) => {
-  const { tipo } = req.query;
+/**
+ * @swagger
+ * tags:
+ *   name: Chistes
+ *   description: The Chistes managing API
+ */
 
-  if (!tipo) {
-    return res.status(400).send({ error: "Parámetro tipo es requerido" });
-  }
+/**
+ * @swagger
+ * /api/v1/chiste:
+ *   get:
+ *     summary: Obtiene un chiste basado en el tipo especificado
+ *     tags: [Chistes]
+ *     parameters:
+ *       - in: query
+ *         name: tipo
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: El tipo de chiste a obtener (Chuck, Dad, Propio)
+ *     responses:
+ *       200:
+ *         description: Chiste obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID del chiste
+ *                 value:
+ *                   type: string
+ *                   description: El texto del chiste
+ *       400:
+ *         description: Parámetro tipo es requerido o no válido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ *       500:
+ *         description: Error al obtener el chiste
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ */
+router.get("/", getChiste);
 
-  try {
-    if (tipo === "Chuck") {
-      const response = await fetch("https://api.chucknorris.io/jokes/random");
-      const data = await response.json();
-      return res.status(200).send(data);
-    } else if (tipo === "Dad") {
-      const response = await fetch("https://icanhazdadjoke.com/", {
-        headers: { Accept: "application/json" },
-      });
-      const data = await response.json();
-      return res.status(200).send(data);
-    } else if (tipo === "Propio") {
-      const count = await Chiste.countDocuments();
-      const random = Math.floor(Math.random() * count);
-      const chiste = await Chiste.findOne().skip(random);
-      if (!chiste) {
-        return res.status(200).send({ message: "Aun no hay chistes, cree uno!" });
-      }
-      return res.status(200).send(chiste);
-    } else {
-      return res.status(400).send({ error: "Parámetro tipo no válido" });
-    }
-  } catch (err) {
-    return res.status(500).send({ error: "Error al obtener el chiste" });
-  }
-
-});
-
-const categoriasPermitidas = ['Dad joke', 'Humor Negro', 'Chistoso', 'Malo'];
-router.post('/', async (req, res) => {
-    try {
-        const { texto, autor = 'Se perdió en el Ávila como Led', puntaje, categoria } = req.body;
+//documentacion
+router.put("/:id", putChiste);
 
 
 
-        if (!texto || !puntaje || !categoria) {
-            return res.status(400).send({ error: 'Texto, puntaje y categoría son requeridos' });
-        }        
-        if (!categoriasPermitidas.includes(categoria)){
-          return res.status(400).send({ error: 'Categoría no válida. Las categorías permitidas son: Dad joke, Humor Negro, Chistoso, Malo' });
-        }
-
-
-        const nuevoChiste = new Chiste({ texto, autor, puntaje, categoria });
-        await nuevoChiste.save();
-
-        return res.status(201).send({ id: nuevoChiste._id });
-    } catch (err) {
-        return res.status(500).send({ error: 'Error al guardar el chiste' });
-    }
-});
-
-// Endpoint 3: Actualizar cualquier campo de un chiste
-
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { texto, autor, puntaje, categoria } = req.body;
-
-  try {
-    const chiste = await Chiste.findById(id);   
-    if (!chiste) {
-      return res.status(404).json({ message: 'Chiste no encontrado' });
-    }
-    if (texto) {
-      chiste.texto = texto;
-    }
-    if (autor) {
-      chiste.autor = autor;
-    }
-    if (puntaje) {
-      chiste.puntaje = puntaje;
-    }
-    if (categoria) {
-      if (!categoriasPermitidas.includes(categoria)) { 
-        return res.status(400).send({ error: 'Categoría no válida. Las categorías permitidas son: Dad joke, Humor Negro, Chistoso, Malo' });
-      }
-      chiste.categoria = categoria;
-    }
-    await chiste.save();
-    return res.status(200).json(chiste);
-  } catch (err) {
-    return res.status(500).send({ error: 'Error al actualizar el chiste' });
-  }
-});
+/**
+ * @swagger
+ * /api/v1/chiste:
+ *   post:
+ *     summary: Crea un nuevo chiste
+ *     tags: [Chistes]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               texto:
+ *                 type: string
+ *                 description: El texto del chiste
+ *                 example: "Este es un chiste muy gracioso"
+ *               autor:
+ *                 type: string
+ *                 description: El autor del chiste
+ *                 example: "Juan Pérez"
+ *               puntaje:
+ *                 type: number
+ *                 description: El puntaje del chiste
+ *                 example: 5
+ *               categoria:
+ *                 type: string
+ *                 description: La categoría del chiste
+ *                 example: "Humor"
+ *     responses:
+ *       201:
+ *         description: Chiste creado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID del chiste creado
+ *                 texto:
+ *                   type: string
+ *                   description: El texto del chiste
+ *                 autor:
+ *                   type: string
+ *                   description: El autor del chiste
+ *                 puntaje:
+ *                   type: number
+ *                   description: El puntaje del chiste
+ *                 categoria:
+ *                   type: string
+ *                   description: La categoría del chiste
+ *       400:
+ *         description: Error en la solicitud
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ *       500:
+ *         description: Error al crear el chiste
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ */
+router.post("/", postChiste);
 
 export default router;
-
-// Endpoint 4: Eliminar un chiste por su id
-
-router.delete('/:id', async (req,res) => {
-  const { id } = req.params;
-  try {
-    const chiste = await Chiste.findById(id);   
-    if (!chiste) {
-      return res.status(404).json({ message: 'Chiste no encontrado' });
-    }
-    await chiste.deleteOne(); 
-    return res.status(200).send("Chiste eliminado con éxito (Gracias a Dios)");
-  } catch (err) {
-    return res.status(500).send({ error: 'Error al eliminar el chiste' });
-  }
-});
-
-// Endpoint 5: Mostrar un chiste por su id
-
-router.get('/:id', async (req,res) => {
-  const { id } = req.params;
-  try {
-    const chiste = await Chiste.findById(id);   
-    if (!chiste) {
-      return res.status(404).json({ message: 'Chiste no encontrado' });
-    }
-    return res.status(200).json(chiste);
-  } catch (err) {
-    return res.status(500).send({ error: 'Error al buscar el chiste, verifica la id' });
-  }
-});
