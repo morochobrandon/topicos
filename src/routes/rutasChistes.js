@@ -359,7 +359,7 @@ router.delete("/:id", deleteChiste);
 router.get("/todos", mostrarTodos);
 
 
-/* Fin Extra */
+
 
 /**
  * @swagger
