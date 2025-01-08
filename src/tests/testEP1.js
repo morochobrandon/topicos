@@ -9,7 +9,14 @@ export async function testGetChiste() {
       const tipoA = 'Chuck';
       const tipoB = 'Propio';
       const tipoC = 'Dad';
-  
+      const chiste = new Chiste({
+        texto: 'Vivan las arepas',
+        autor: 'Se perdio en el avila como Led',
+        puntaje: 1,
+        categoria: 'Dad joke'
+      });
+    await chiste.save();
+
       // Si el chiste es Chuck
       const ejChuck = {
         categories: [],
@@ -108,7 +115,7 @@ export async function testGetChiste() {
   
       console.log('Prueba Endpoint #1: Exitosa');
   
-      
+      chiste.deleteOne();
     } catch (error) {
  
       console.error("Error durante la ejecución de la prueba (endpoint #1):", error.message);
