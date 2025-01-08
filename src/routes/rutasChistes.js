@@ -3,6 +3,7 @@ import express from "express";
 import {
   deleteChiste,
   getChiste,
+  getChistePorId,
   postChiste,
   putChiste
 } from "../controllers/rutasChistesController.js";
@@ -315,6 +316,49 @@ router.put("/:id", putChiste);
  *                   description: Descripción del error
  */
 router.delete("/:id", deleteChiste);
+
+/**
+ * @swagger
+ * /api/v1/chiste/{id}:
+ *   get:
+ *     summary: Obtiene un chiste por su ID
+ *     tags: [Chistes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID del chiste a obtener
+ *     responses:
+ *       200:
+ *         description: Chiste obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Chiste'
+ *       404:
+ *         description: Chiste no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Chiste no encontrado"
+ *       500:
+ *         description: Error al obtener el chiste
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ */
+router.get("/:id", getChistePorId);
 
 export default router;
 
