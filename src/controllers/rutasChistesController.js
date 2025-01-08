@@ -136,6 +136,25 @@ export const getChistePorId = async (req, res) => {
   }
 };
 
+// Eros: 
+// Endpoint 6: Contar el número de chistes por categoría
+
+export async function contarCategoria(req, res) {
+  try {
+    const { categoria } = req.params;
+    if (!categoriasPermitidas.includes(categoria)) {
+      return res.status(400).json({ error: "Categoría inválida" });
+    }
+    const count = await Chiste.countDocuments({ categoria });
+    if (count === 0) {
+      return res.status(404).json({ error: "No se encontraron chistes para la categoría especificada" });
+    }
+    res.status(200).json({ count });
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener la cantidad de chistes" });
+  }
+}
+
 // Extra 1 
 // Endpoint 9: Mostrar todos los chistes
 
