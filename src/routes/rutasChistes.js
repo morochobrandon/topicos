@@ -1,6 +1,7 @@
 import express from "express";
 //import {Chiste} from "./../models/chistes.js";
 import {
+  contarCategoria,
   deleteChiste,
   getChiste,
   getChistePorId,
@@ -403,6 +404,53 @@ router.get("/todos", mostrarTodos);
  *                   description: Descripción del error
  */
 router.get("/:id", getChistePorId);
+
+/**
+ * @swagger
+ * /api/v1/chiste/countByCategory/{categoria}:
+ *   get:
+ *     summary: Obtiene la cantidad de chistes por categoría
+ *     tags: [Chistes]
+ *     parameters:
+ *       - in: path
+ *         name: categoria
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: La categoría de los chistes a contar
+ *     responses:
+ *       200:
+ *         description: Cantidad de chistes obtenida exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 count:
+ *                   type: number
+ *                   description: Número de chistes en la categoría especificada
+ *       404:
+ *         description: No se encontraron chistes para la categoría especificada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "No se encontraron chistes para la categoría especificada"
+ *       500:
+ *         description: Error al obtener la cantidad de chistes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ */
+router.get("/categoria/:categoria", contarCategoria);
 
 export default router;
 
