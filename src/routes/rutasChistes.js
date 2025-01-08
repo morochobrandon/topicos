@@ -6,6 +6,7 @@ import {
   deleteChiste,
   getChiste,
   getChistePorId,
+  mostrarChistesCategoria,
   mostrarTodos,
   postChiste,
   putChiste
@@ -497,6 +498,61 @@ router.get("/categoria/:categoria", contarCategoria);
  *                   description: Descripción del error
  */
 router.get("/puntaje/:puntaje", contarPuntaje);
+
+/**
+ * @swagger
+ * /api/v1/chiste/{categoria}:
+ *   get:
+ *     summary: Obtiene todos los chistes de una categoría específica
+ *     tags: [Chistes]
+ *     parameters:
+ *       - in: path
+ *         name: categoria
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: La categoría de los chistes a obtener
+ *     responses:
+ *       200:
+ *         description: Lista de chistes obtenida exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Chiste'
+ *       400:
+ *         description: Categoría inválida
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Categoría inválida"
+ *       404:
+ *         description: No se encontraron chistes para la categoría especificada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "No se encontraron chistes para la categoría especificada"
+ *       500:
+ *         description: Error al obtener los chistes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Error al obtener los chistes"
+ */
+router.get("/todos/:categoria", mostrarChistesCategoria);
 
 export default router;
 
