@@ -4,6 +4,7 @@ import {
   deleteChiste,
   getChiste,
   getChistePorId,
+  mostrarTodos,
   postChiste,
   putChiste
 } from "../controllers/rutasChistesController.js";
@@ -316,6 +317,49 @@ router.put("/:id", putChiste);
  *                   description: Descripción del error
  */
 router.delete("/:id", deleteChiste);
+
+
+
+/**
+ * @swagger
+ * /api/v1/chistes:
+ *   get:
+ *     summary: Obtiene todos los chistes almacenados en la base de datos
+ *     tags: [Chistes]
+ *     responses:
+ *       200:
+ *         description: Lista de todos los chistes obtenida exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Chiste'
+ *       404:
+ *         description: No se encontraron chistes en la base de datos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No hay chistes en la base de datos"
+ *       500:
+ *         description: Error al obtener los chistes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Error al obtener los chistes"
+ */
+router.get("/todos", mostrarTodos);
+
+
+/* Fin Extra */
 
 /**
  * @swagger

@@ -135,3 +135,18 @@ export const getChistePorId = async (req, res) => {
     return res.status(500).send({ error: 'Error al buscar el chiste, verifica la id' });
   }
 };
+
+// Extra 1 
+// Endpoint 9: Mostrar todos los chistes
+
+export async function mostrarTodos (req, res) {
+  try {
+    const chistes = await Chiste.find();
+    if (chistes.length === 0) {
+      return res.status(404).json({ error: "No hay chistes en la base de datos" });
+    }
+    res.status(200).json(chistes);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener los chistes" });
+  }
+}
