@@ -174,7 +174,25 @@ export async function contarPuntaje(req, res) {
   }
 }
 
-// Extra 
+// Extra
+// Endpoint 8: Mostrar todos los chistes de una categoría
+
+export async function mostrarChistesCategoria (req, res) {
+  try {
+    const { categoria } = req.params;
+    if (!categoriasPermitidas.includes(categoria)) {
+      return res.status(400).json({ error: "Categoría inválida" });
+    }
+    const chistes = await Chiste.find({ categoria });
+    if (chistes.length === 0) {
+      return res.status(404).json({ error: "No se encontraron chistes para la categoría especificada" });
+    }
+    res.status(200).json(chistes);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener los chistes" });
+  }
+}
+
 // Endpoint 9: Mostrar todos los chistes
 
 export async function mostrarTodos (req, res) {
