@@ -105,3 +105,19 @@ export const putChiste = async (req, res) => {
     return res.status(500).send({ error: 'Error al actualizar el chiste' });
   }
 };
+
+
+// Endpoint 4: Eliminar un chiste por su id
+export const deleteChiste = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const chiste = await Chiste.findById(id);   
+    if (!chiste) {
+      return res.status(404).json({ message: 'Chiste no encontrado' });
+    }
+    await chiste.deleteOne(); 
+    return res.status(200).send("Chiste eliminado con éxito (Gracias a Dios)");
+  } catch (err) {
+    return res.status(500).send({ error: 'Error al eliminar el chiste' });
+  }
+};

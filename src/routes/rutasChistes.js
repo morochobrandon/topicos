@@ -1,6 +1,7 @@
 import express from "express";
 //import {Chiste} from "./../models/chistes.js";
 import {
+  deleteChiste,
   getChiste,
   postChiste,
   putChiste
@@ -267,6 +268,53 @@ router.post("/", postChiste);
  */
 router.put("/:id", putChiste);
 
+
+/**
+ * @swagger
+ * /api/v1/chiste/{id}:
+ *   delete:
+ *     summary: Elimina un chiste por su ID
+ *     tags: [Chistes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID del chiste a eliminar
+ *     responses:
+ *       200:
+ *         description: Chiste eliminado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Chiste eliminado exitosamente"
+ *       404:
+ *         description: Chiste no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Chiste no encontrado"
+ *       500:
+ *         description: Error al eliminar el chiste
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ */
+router.delete("/:id", deleteChiste);
 
 export default router;
 
