@@ -325,7 +325,7 @@ router.delete("/:id", deleteChiste);
 
 /**
  * @swagger
- * /api/v1/chistes:
+ * /api/v1/chistes/todos:
  *   get:
  *     summary: Obtiene todos los chistes almacenados en la base de datos
  *     tags: [Chistes]
@@ -409,7 +409,7 @@ router.get("/:id", getChistePorId);
 
 /**
  * @swagger
- * /api/v1/chiste/countByCategory/{categoria}:
+ * /api/v1/chiste/categoria/{categoria}:
  *   get:
  *     summary: Obtiene la cantidad de chistes por categoría
  *     tags: [Chistes]
@@ -456,7 +456,7 @@ router.get("/categoria/:categoria", contarCategoria);
 
 /**
  * @swagger
- * /api/v1/chiste/byPuntaje/{puntaje}:
+ * /api/v1/chiste/puntaje/{puntaje}:
  *   get:
  *     summary: Obtiene todos los chistes por puntaje
  *     tags: [Chistes]
@@ -501,7 +501,7 @@ router.get("/puntaje/:puntaje", contarPuntaje);
 
 /**
  * @swagger
- * /api/v1/chiste/{categoria}:
+ * /api/v1/chiste/todos/{categoria}:
  *   get:
  *     summary: Obtiene todos los chistes de una categoría específica
  *     tags: [Chistes]
