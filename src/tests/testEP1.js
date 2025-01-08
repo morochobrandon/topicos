@@ -115,7 +115,7 @@ export async function testGetChiste() {
   
       console.log('Prueba Endpoint #1: Exitosa');
   
-      chiste.deleteOne();
+      await chiste.deleteOne();
     } catch (error) {
  
       console.error("Error durante la ejecución de la prueba (endpoint #1):", error.message);
