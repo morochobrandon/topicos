@@ -12,6 +12,12 @@
 *****************************************************************************
 -----------------------------------------------------------------------------
 
+**************************** Integrantes  ***********************************
+
+		- Eros dos Ramos -> E2R4M0S
+		- Brandon Gutierrez -> morochobrandon
+		- Mario Ramos -> MarioRamos0 && Mariecito 
+
 ******************* Cómo ejecutar la aplicación? ****************************
 
 	1.Abra una terminal o consola de comandos.
