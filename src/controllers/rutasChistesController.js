@@ -143,7 +143,7 @@ export async function contarCategoria(req, res) {
   try {
     const { categoria } = req.params;
     if (!categoriasPermitidas.includes(categoria)) {
-      return res.status(400).json({ error: "Categoría inválida" });
+      return res.status(400).json({ error: "Categoría no válida. Las categorías permitidas son: Dad joke, Humor Negro, Chistoso, Malo" });
     }
     const count = await Chiste.countDocuments({ categoria });
     if (count === 0) {
@@ -181,7 +181,7 @@ export async function mostrarChistesCategoria (req, res) {
   try {
     const { categoria } = req.params;
     if (!categoriasPermitidas.includes(categoria)) {
-      return res.status(400).json({ error: "Categoría inválida" });
+      return res.status(400).json({ error: "Categoría no válida. Las categorías permitidas son: Dad joke, Humor Negro, Chistoso, Malo" });
     }
     const chistes = await Chiste.find({ categoria });
     if (chistes.length === 0) {

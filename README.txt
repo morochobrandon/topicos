@@ -12,6 +12,9 @@
 *****************************************************************************
 -----------------------------------------------------------------------------
 
+VERSION 1: " Esta version utiliza docker, para ejecutarla debes descargar
+docker en tu equipo"
+
 **************************** Integrantes  ***********************************
 
 		- Eros dos Ramos -> E2R4M0S
@@ -22,8 +25,18 @@
 
 	1.Abra una terminal o consola de comandos.
 	2. Navega hasta la carpeta "topicos".
-	3. Escriba el siguiente comando:
-	" docker-compose -f docker-compose.local.yml up --build "
+	3. Escriba los siguientes comando:
+	" npm install "
+	" npm install cors "
+	" npm install express "
+	" npm install mongoose "
+	" npm install swagger-jsdoc "
+	" npm install swagger-ui-express "
+
+	Para ejecutar: " node index.js "
+	NOTA: Debes tener instalado node.js en tu equipo.
+		  Recuerda agregar mongodb como variable de entorno en el path de 
+		  tu computadora.
 
 ******************* Cómo funcionan los tests?    ****************************
 
