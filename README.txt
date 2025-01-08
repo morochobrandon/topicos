@@ -19,6 +19,28 @@
 	3. Escriba el siguiente comando:
 	" docker-compose -f docker-compose.local.yml up --build "
 
+******************* Cómo funcionan los tests?    ****************************
+
+   *   Las pruebas unitarias realizan una comparación entre la respuesta es- *
+   * perada y la respuesta de la aplicación, de esta manera comprobamos si   *
+   * los endpoints están funcionando correctamente.                          *
+
+   Ejemplo: "testEP1.js"
+
+   - En esta prueba se realizan tres peticiones simuladas, una por, ya que en
+   cada tipo de chiste. En ese momento no se está utilizando express, por lo 
+   que la función "getChiste" es incapaz de responder por sí sola.
+   - Por esa razón realizamos una simulación del comportamiento del servidor
+   creando dos objetos llamados req y res, que contienen los métodos con los 
+   que normalmente express trabajan las peticiones. 
+   - En este caso comparamos la estructura de cada tipo de chiste con la re-
+   spuesta de cada petición.
+
+	Recomendaciones:
+
+	* Para el testEP7, crea manualmente algun chiste en la base de datos con 
+	puntaje 100 o cambia este valor en la función.
+	
 ******************** Cómo probar los endpoints? *****************************
 -----------------------------------------------------------------------------
 	1: GET: Para obtener un chiste, de tipo 'Chuck', 'Propio' o 'Dad' .
