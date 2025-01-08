@@ -458,7 +458,7 @@ router.get("/categoria/:categoria", contarCategoria);
  * @swagger
  * /api/v1/chiste/puntaje/{puntaje}:
  *   get:
- *     summary: Obtiene todos los chistes por puntaje
+ *     summary: Obtiene la cantidad de chistes por puntaje
  *     tags: [Chistes]
  *     parameters:
  *       - in: path
