@@ -2,6 +2,7 @@ import express from "express";
 //import {Chiste} from "./../models/chistes.js";
 import {
   contarCategoria,
+  contarPuntaje,
   deleteChiste,
   getChiste,
   getChistePorId,
@@ -451,6 +452,51 @@ router.get("/:id", getChistePorId);
  *                   description: Descripción del error
  */
 router.get("/categoria/:categoria", contarCategoria);
+
+/**
+ * @swagger
+ * /api/v1/chiste/byPuntaje/{puntaje}:
+ *   get:
+ *     summary: Obtiene todos los chistes por puntaje
+ *     tags: [Chistes]
+ *     parameters:
+ *       - in: path
+ *         name: puntaje
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: El puntaje de los chistes a obtener
+ *     responses:
+ *       200:
+ *         description: Chistes obtenidos exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Chiste'
+ *       404:
+ *         description: No se encontraron chistes con el puntaje especificado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "No se encontraron chistes con el puntaje especificado"
+ *       500:
+ *         description: Error al obtener los chistes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ */
+router.get("/puntaje/:puntaje", contarPuntaje);
 
 export default router;
 

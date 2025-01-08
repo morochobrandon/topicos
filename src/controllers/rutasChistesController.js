@@ -155,7 +155,26 @@ export async function contarCategoria(req, res) {
   }
 }
 
-// Extra 1 
+// Endpoint 7: Contar chistes por puntaje
+
+export async function contarPuntaje(req, res) {
+  try {
+    const { puntaje } = req.params;
+
+    if (typeof parseInt(puntaje) !== "number") {
+      return res.status(400).json({ error: "El puntaje debe ser de tipo numerico" });
+    }
+    const count = await Chiste.countDocuments({ puntaje });
+    if (count === 0) {
+      return res.status(404).json({ error: "No se encontraron chistes con el puntaje especificado" });
+    }
+    res.status(200).json({ count });
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener la cantidad de chistes por puntaje" });
+  }
+}
+
+// Extra 
 // Endpoint 9: Mostrar todos los chistes
 
 export async function mostrarTodos (req, res) {
