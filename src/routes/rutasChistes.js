@@ -325,7 +325,7 @@ router.delete("/:id", deleteChiste);
 
 /**
  * @swagger
- * /api/v1/chistes/todos:
+ * /api/v1/chiste/todos:
  *   get:
  *     summary: Obtiene todos los chistes almacenados en la base de datos
  *     tags: [Chistes]
